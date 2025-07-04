@@ -1,3 +1,5 @@
+const API_URL = 'https://script.google.com/macros/s/AKfycbyIcRxCjb9kckKS_bjCJwhEmnlWYzKX1muXNajOo13_x8WRzYLZqesW3vDm-ZQRRHO2Hg/exec';
+
 // 登出功能
 function logout() {
   localStorage.removeItem('isAdmin');
@@ -5,17 +7,22 @@ function logout() {
   window.location.href = 'login.html';
 }
 
-function getResources() {
-  return JSON.parse(localStorage.getItem('resources') || '[]');
+async function getResources() {
+  const res = await fetch(API_URL);
+  return await res.json();
 }
-function setResources(data) {
-  localStorage.setItem('resources', JSON.stringify(data));
+async function addResource(data) {
+  await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
 }
 
 // 載入資源列表
-function loadResources() {
+async function loadResources() {
   const cat = document.getElementById('filterCategory').value;
-  let data = getResources();
+  let data = await getResources();
   if(cat !== 'all') data = data.filter(r => r.category === cat);
   const tbody = document.querySelector('#resourceTable tbody');
   tbody.innerHTML = '';
@@ -39,42 +46,30 @@ function loadResources() {
   });
 }
 
-document.getElementById('addForm').onsubmit = function(e) {
+document.getElementById('addForm').onsubmit = async function(e) {
   e.preventDefault();
   const form = e.target;
-  const data = getResources();
   const id = Date.now().toString();
-  data.push({
+  const data = {
     id,
     title: form.title.value,
     url: form.url.value,
     category: form.category.value,
     description: form.description.value
-  });
-  setResources(data);
+  };
+  await addResource(data);
   form.reset();
   loadResources();
 }
 
 document.getElementById('filterCategory').onchange = loadResources;
 
+// 編輯與刪除功能暫時無法直接操作 Google Sheets，僅支援新增
 function editResource(id, field, value) {
-  const data = getResources();
-  const idx = data.findIndex(r => r.id === id);
-  if(idx !== -1) {
-    data[idx][field] = value;
-    setResources(data);
-    loadResources();
-  }
+  alert('Google Sheets 版本目前僅支援新增，編輯/刪除請直接到 Google 試算表操作。');
 }
-
 function deleteResource(id) {
-  if(confirm('確定要刪除嗎？')) {
-    let data = getResources();
-    data = data.filter(r => r.id !== id);
-    setResources(data);
-    loadResources();
-  }
+  alert('Google Sheets 版本目前僅支援新增，刪除請直接到 Google 試算表操作。');
 }
 
 // 初始載入
