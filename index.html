@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台語資源攏佇遮</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>台語資源攏佇遮</h1>
+  <div class="categories">
+    <a href="category.html?type=listen" class="category">聽</a>
+    <a href="category.html?type=speak" class="category">講</a>
+    <a href="category.html?type=read" class="category">讀</a>
+    <a href="category.html?type=write" class="category">寫</a>
+  </div>
+  <div id="adminArea"></div>
+  <script>
+    // 管理者已登入時顯示進入後台按鈕
+    function checkAdmin() {
+      const adminArea = document.getElementById('adminArea');
+      adminArea.innerHTML = '';
+      if(localStorage.getItem('isAdmin') === '1') {
+        const btn = document.createElement('a');
+        btn.href = 'admin.html';
+        btn.className = 'home-btn';
+        btn.innerText = '進入後台';
+        adminArea.appendChild(btn);
+      } else {
+        const btn = document.createElement('a');
+        btn.href = 'login.html';
+        btn.className = 'home-btn';
+        btn.innerText = '管理者登入';
+        adminArea.appendChild(btn);
+      }
+    }
+    checkAdmin();
+  </script>
+</body>
+</html> 

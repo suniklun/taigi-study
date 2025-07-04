@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理者登入 - 台語資源攏佇遮</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>管理者登入</h1>
+  <form id="loginForm" class="login-form">
+    <input type="text" name="username" placeholder="帳號" required><br>
+    <input type="password" name="password" placeholder="密碼" required><br>
+    <button type="submit" class="login-btn">登入</button>
+    <div id="loginError" style="color:red;margin-top:10px;"></div>
+  </form>
+  <a href="index.html" class="home-btn">回首頁</a>
+  <script>
+    // 10分鐘內自動登入
+    const adminLogin = JSON.parse(localStorage.getItem('adminLogin')||'null');
+    if(adminLogin && Date.now() - adminLogin.time < 10*60*1000) {
+      localStorage.setItem('isAdmin', '1');
+      window.location.href = 'admin.html';
+    }
+    // 支援多組帳號密碼
+    const admins = [
+      { username: 'admin', password: '1234' },
+      { username: 'test', password: '5678' }
+    ];
+    document.getElementById('loginForm').onsubmit = function(e) {
+      e.preventDefault();
+      const username = this.username.value;
+      const password = this.password.value;
+      const found = admins.find(a => a.username === username && a.password === password);
+      if(found) {
+        localStorage.setItem('isAdmin', '1');
+        localStorage.setItem('adminLogin', JSON.stringify({time: Date.now()}));
+        window.location.href = 'admin.html';
+      } else {
+        document.getElementById('loginError').innerText = '登入失敗，請檢查帳號密碼';
+      }
+    }
+  </script>
+</body>
+</html> 
