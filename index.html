@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台語學習系統</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>台語資源攏佇遮</h1>
+        
+        <div class="main-grid">
+            <div class="skill-card" onclick="location.href='category.html?type=listen'">
+                <div class="skill-icon">👂</div>
+                <h2>聽</h2>
+                <p>聽力練習資源</p>
+            </div>
+            
+            <div class="skill-card" onclick="location.href='category.html?type=speak'">
+                <div class="skill-icon">🗣️</div>
+                <h2>講</h2>
+                <p>口說練習資源</p>
+            </div>
+            
+            <div class="skill-card" onclick="location.href='category.html?type=read'">
+                <div class="skill-icon">📖</div>
+                <h2>讀</h2>
+                <p>閱讀練習資源</p>
+            </div>
+            
+            <div class="skill-card" onclick="location.href='category.html?type=write'">
+                <div class="skill-icon">✍️</div>
+                <h2>寫</h2>
+                <p>書寫練習資源</p>
+            </div>
+        </div>
+        
+        <div class="admin-link">
+            <button onclick="location.href='admin.html'">管理後台</button>
+        </div>
+    </div>
+</body>
+</html>
