@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>後台管理 - 台語資源攏佇遮</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>後台管理</h1>
+  <div>
+    <button onclick="logout()" class="home-btn">登出</button>
+    <a href="index.html" class="home-btn">回首頁</a>
+  </div>
+  <h2>新增資源</h2>
+  <form id="addForm">
+    <input type="text" name="title" placeholder="標題" required>
+    <input type="text" name="url" placeholder="網址" required>
+    <select name="category" required>
+      <option value="listen">聽</option>
+      <option value="speak">講</option>
+      <option value="read">讀</option>
+      <option value="write">寫</option>
+    </select>
+    <input type="text" name="description" placeholder="簡介">
+    <button type="submit">新增</button>
+  </form>
+  <h2>資源列表</h2>
+  <div>
+    <label>分類：</label>
+    <select id="filterCategory">
+      <option value="all">全部</option>
+      <option value="listen">聽</option>
+      <option value="speak">講</option>
+      <option value="read">讀</option>
+      <option value="write">寫</option>
+    </select>
+  </div>
+  <table id="resourceTable" border="1" style="margin:20px auto;">
+    <thead>
+      <tr><th>標題</th><th>網址</th><th>分類</th><th>簡介</th><th>操作</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <script src="admin.js"></script>
+  <script>
+    // 權限檢查與10分鐘自動登入
+    const adminLogin = JSON.parse(localStorage.getItem('adminLogin')||'null');
+    if(!(adminLogin && Date.now() - adminLogin.time < 10*60*1000)) {
+      localStorage.removeItem('isAdmin');
+      window.location.href = 'login.html';
+    } else {
+      localStorage.setItem('isAdmin', '1');
+    }
+  </script>
+</body>
+</html> 
